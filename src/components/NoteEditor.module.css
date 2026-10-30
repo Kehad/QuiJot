@@ -1,0 +1,58 @@
+.appBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.noteTextarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--app-text);
+  background: transparent;
+  user-select: text;
+  -webkit-app-region: no-drag;
+}
+
+.noteTextarea::placeholder {
+  color: var(--app-text-muted);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Custom Sleek Scrollbar */
+.noteTextarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.noteTextarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.noteTextarea::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+:global(body.theme-glass-dark) .noteTextarea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.noteTextarea::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.fontMonoActive {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}

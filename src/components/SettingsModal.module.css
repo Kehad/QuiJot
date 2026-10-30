@@ -1,0 +1,348 @@
+.modalOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  animation: modalFadeIn 0.18s ease-out;
+  -webkit-app-region: no-drag;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 320px;
+  max-height: calc(100% - 10px);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: modalScaleUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-app-region: no-drag;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--app-border);
+  padding-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.modalBody {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 3px;
+  min-height: 0;
+}
+
+/* Custom Sleek Scrollbar for Settings Modal */
+.modalBody::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+}
+
+:global(body.theme-glass-dark) .modalBody::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modalBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.modalTitle {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.btnIcon:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-0.5px);
+}
+
+:global(body.theme-glass-dark) .btnIcon:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.modalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--app-text);
+  padding: 4px 0;
+}
+
+.modalLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modalSubtext {
+  font-size: 10px;
+  color: var(--app-text-muted);
+}
+
+/* Custom Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliderSwitch {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+  transition: 0.2s;
+}
+
+:global(body.theme-glass-dark) .sliderSwitch {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sliderSwitch:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.switch input:checked + .sliderSwitch {
+  background-color: var(--app-accent);
+}
+
+.switch input:checked + .sliderSwitch:before {
+  transform: translateX(16px);
+}
+
+.presetBtn {
+  flex: 1;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--app-border);
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.presetBtn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+:global(body.theme-glass-dark) .presetBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.presetBtn.isActive {
+  background: var(--app-accent);
+  color: #fff;
+  border-color: var(--app-accent);
+}
+
+.popoverTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-text-muted);
+}
+
+.screenshotPathDisplay {
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--app-border);
+  overflow: hidden;
+}
+
+:global(body.theme-glass-dark) .screenshotPathDisplay {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pathText {
+  font-size: 10.5px;
+  font-family: monospace;
+  color: var(--app-text);
+  word-break: break-all;
+  display: block;
+  user-select: text;
+}
+
+.modalActions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.btnSecondary {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--app-border);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--app-text);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.14s ease;
+}
+
+:global(body.theme-glass-dark) .btnSecondary {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btnSecondary:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-0.5px);
+}
+
+:global(body.theme-glass-dark) .btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btnDanger {
+  color: #ef4444;
+}
+
+.btnDanger:hover {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.settingsShortcutsCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+:global(body.theme-glass-dark) .settingsShortcutsCard {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.shortcutItemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.shortcutLabel {
+  font-size: 10.5px;
+  color: var(--app-text);
+  font-weight: 500;
+}
+
+.shortcutKeysBadge {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  color: var(--app-text-muted);
+}
+
+.shortcutKeysBadge kbd {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--app-border);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-weight: 700;
+  color: var(--app-text);
+  font-size: 9px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+:global(body.theme-glass-dark) .shortcutKeysBadge kbd {
+  background: rgba(255, 255, 255, 0.12);
+}

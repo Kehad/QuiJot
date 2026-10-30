@@ -1,0 +1,139 @@
+.appFooter {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--app-border);
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  color: var(--app-text-muted);
+  -webkit-app-region: drag;
+  cursor: grab;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+:global(body.theme-glass-dark) .appFooter {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  -webkit-app-region: no-drag;
+}
+
+.statCounter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.saveIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.saveIndicator.saving {
+  color: var(--app-accent);
+}
+
+.saveIndicator.saved {
+  opacity: 0.8;
+}
+
+.saveDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  -webkit-app-region: no-drag;
+}
+
+.btnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.btnIcon:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-0.5px);
+}
+
+:global(body.theme-glass-dark) .btnIcon:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.themePicker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+:global(body.theme-glass-dark) .themePicker {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.swatchBtn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 0;
+}
+
+.swatchBtn:hover {
+  transform: scale(1.2);
+}
+
+.swatchBtn.isActive {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1.5px var(--app-accent), 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(1.15);
+}
+
+.swatchYellow {
+  background: #fef08a;
+}
+.swatchMint {
+  background: #bbf7d0;
+}
+.swatchPink {
+  background: #fbcfe8;
+}
+.swatchBlue {
+  background: #bae6fd;
+}
+.swatchDark {
+  background: #1e293b;
+}

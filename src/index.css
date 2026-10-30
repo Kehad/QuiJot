@@ -1,0 +1,221 @@
+/* ==========================================================================
+   FastNote - Global Design Tokens, Themes, & Base Styles
+   ========================================================================== */
+
+:root {
+  /* Default Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+
+  /* Classic Canary Yellow Theme */
+  --bg-primary-yellow: rgba(254, 240, 138, 0.88);
+  --bg-surface-yellow: rgba(254, 249, 195, 0.94);
+  --bg-header-yellow: rgba(253, 224, 71, 0.55);
+  --border-yellow: rgba(234, 179, 8, 0.35);
+  --text-main-yellow: #292524;
+  --text-muted-yellow: #78716c;
+  --accent-yellow: #eab308;
+  --accent-glow-yellow: rgba(234, 179, 8, 0.5);
+
+  /* Mint Green Theme */
+  --bg-primary-mint: rgba(187, 247, 208, 0.88);
+  --bg-surface-mint: rgba(220, 252, 231, 0.94);
+  --bg-header-mint: rgba(134, 239, 172, 0.55);
+  --border-mint: rgba(34, 197, 94, 0.35);
+  --text-main-mint: #143522;
+  --text-muted-mint: #4b6e56;
+  --accent-mint: #22c55e;
+  --accent-glow-mint: rgba(34, 197, 94, 0.45);
+
+  /* Soft Pink Theme */
+  --bg-primary-pink: rgba(251, 207, 232, 0.88);
+  --bg-surface-pink: rgba(252, 231, 243, 0.94);
+  --bg-header-pink: rgba(249, 168, 212, 0.55);
+  --border-pink: rgba(236, 72, 153, 0.35);
+  --text-main-pink: #381a28;
+  --text-muted-pink: #7d4d65;
+  --accent-pink: #ec4899;
+  --accent-glow-pink: rgba(236, 72, 153, 0.45);
+
+  /* Ice Blue Theme */
+  --bg-primary-blue: rgba(186, 230, 253, 0.88);
+  --bg-surface-blue: rgba(224, 242, 254, 0.94);
+  --bg-header-blue: rgba(125, 211, 252, 0.55);
+  --border-blue: rgba(14, 165, 233, 0.35);
+  --text-main-blue: #0c2b42;
+  --text-muted-blue: #446580;
+  --accent-blue: #0ea5e9;
+  --accent-glow-blue: rgba(14, 165, 233, 0.45);
+
+  /* Obsidian Glass Theme (Dark Mode) */
+  --bg-primary-dark: rgba(15, 23, 42, 0.88);
+  --bg-surface-dark: rgba(30, 41, 59, 0.92);
+  --bg-header-dark: rgba(30, 41, 59, 0.7);
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --text-main-dark: #f1f5f9;
+  --text-muted-dark: #94a3b8;
+  --accent-dark: #fbbf24;
+  --accent-glow-dark: rgba(251, 191, 36, 0.4);
+
+  /* Current Active Theme Tokens (Initialized to Yellow) */
+  --app-bg: var(--bg-primary-yellow);
+  --app-surface: var(--bg-surface-yellow);
+  --app-header: var(--bg-header-yellow);
+  --app-border: var(--border-yellow);
+  --app-text: var(--text-main-yellow);
+  --app-text-muted: var(--text-muted-yellow);
+  --app-accent: var(--accent-yellow);
+  --app-accent-glow: var(--accent-glow-yellow);
+  --app-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Theme Classes applied to body */
+body.theme-yellow {
+  --app-bg: var(--bg-primary-yellow);
+  --app-surface: var(--bg-surface-yellow);
+  --app-header: var(--bg-header-yellow);
+  --app-border: var(--border-yellow);
+  --app-text: var(--text-main-yellow);
+  --app-text-muted: var(--text-muted-yellow);
+  --app-accent: var(--accent-yellow);
+  --app-accent-glow: var(--accent-glow-yellow);
+}
+
+body.theme-mint {
+  --app-bg: var(--bg-primary-mint);
+  --app-surface: var(--bg-surface-mint);
+  --app-header: var(--bg-header-mint);
+  --app-border: var(--border-mint);
+  --app-text: var(--text-main-mint);
+  --app-text-muted: var(--text-muted-mint);
+  --app-accent: var(--accent-mint);
+  --app-accent-glow: var(--accent-glow-mint);
+}
+
+body.theme-pink {
+  --app-bg: var(--bg-primary-pink);
+  --app-surface: var(--bg-surface-pink);
+  --app-header: var(--bg-header-pink);
+  --app-border: var(--border-pink);
+  --app-text: var(--text-main-pink);
+  --app-text-muted: var(--text-muted-pink);
+  --app-accent: var(--accent-pink);
+  --app-accent-glow: var(--accent-glow-pink);
+}
+
+body.theme-blue {
+  --app-bg: var(--bg-primary-blue);
+  --app-surface: var(--bg-surface-blue);
+  --app-header: var(--bg-header-blue);
+  --app-border: var(--border-blue);
+  --app-text: var(--text-main-blue);
+  --app-text-muted: var(--text-muted-blue);
+  --app-accent: var(--accent-blue);
+  --app-accent-glow: var(--accent-glow-blue);
+}
+
+body.theme-glass-dark {
+  --app-bg: var(--bg-primary-dark);
+  --app-surface: var(--bg-surface-dark);
+  --app-header: var(--bg-header-dark);
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --app-border: var(--border-dark);
+  --app-text: var(--text-main-dark);
+  --app-text-muted: var(--text-muted-dark);
+  --app-accent: var(--accent-dark);
+  --app-accent-glow: var(--accent-glow-dark);
+  --app-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent !important;
+  font-family: var(--font-sans);
+  color: var(--app-text);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Shared Keyframes */
+@keyframes pulsePin {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes toastPop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.15); }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

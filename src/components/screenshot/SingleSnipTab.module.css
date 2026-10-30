@@ -1,0 +1,134 @@
+.singleSnipModePanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+.singleSnipHeroCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 16px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.025);
+  border: 1px solid var(--app-border);
+  gap: 10px;
+}
+
+:global(body.theme-glass-dark) .singleSnipHeroCard {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.snipHeroIconBox {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.snipHeroIconBox.modeRect {
+  background: rgba(14, 165, 233, 0.15);
+  color: #0284c7;
+  border: 1px dashed rgba(14, 165, 233, 0.4);
+}
+
+:global(body.theme-glass-dark) .snipHeroIconBox.modeRect {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.snipHeroIconBox.modeScreen {
+  background: rgba(168, 85, 247, 0.15);
+  color: #9333ea;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+:global(body.theme-glass-dark) .snipHeroIconBox.modeScreen {
+  background: rgba(192, 132, 252, 0.2);
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.5);
+}
+
+.snipHeroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.snipHeroTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--app-text);
+}
+
+.snipHeroDesc {
+  font-size: 11px;
+  color: var(--app-text-muted);
+  max-width: 290px;
+  line-height: 1.4;
+}
+
+.snipHeroTags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.snipTag {
+  font-size: 9.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--app-border);
+  color: var(--app-text-muted);
+}
+
+:global(body.theme-glass-dark) .snipTag {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btnPrimary {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: var(--app-accent);
+  color: #18181b;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btnPrimary:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-0.5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.snipHeroActionBtn {
+  padding: 8px 18px;
+  font-size: 11.5px;
+  margin-top: 4px;
+}

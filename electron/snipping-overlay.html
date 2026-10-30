@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FastSnap</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      cursor: crosshair;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    #screen-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      pointer-events: none;
+    }
+    /* Dimmer overlay */
+    #dimmer {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
+    /* Snipping Banner */
+    .snip-banner {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      color: #f8fafc;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 10000;
+      pointer-events: auto;
+    }
+    .snip-banner .cancel-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #cbd5e1;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .snip-banner .cancel-btn:hover {
+      background: rgba(239, 68, 68, 0.8);
+      color: white;
+    }
+    /* Selection Box */
+    #selection-box {
+      display: none;
+      position: absolute;
+      border: 2px dashed #0284c7;
+      box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.42);
+      pointer-events: none;
+      z-index: 9999;
+    }
+    /* Inner clear glow */
+    #selection-box::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      pointer-events: none;
+    }
+    /* Dimension Badge */
+    #dimension-badge {
+      position: absolute;
+      bottom: -28px;
+      right: 0;
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+  <div id="screen-bg"></div>
+  <div id="dimmer"></div>
+
+  <div class="snip-banner" id="banner">
+    <span>📐 Drag a rectangle to snip • Press <strong>Esc</strong> to cancel</span>
+    <button type="button" class="cancel-btn" id="cancel-btn">Cancel</button>
+  </div>
+
+  <div id="selection-box">
+    <div id="dimension-badge">0 × 0</div>
+  </div>
+
+  <script>
+    const screenBg = document.getElementById('screen-bg');
+    const dimmer = document.getElementById('dimmer');
+    const selectionBox = document.getElementById('selection-box');
+    const dimBadge = document.getElementById('dimension-badge');
+    const cancelBtn = document.getElementById('cancel-btn');
+
+    let fullImg = new Image();
+    let isDrawing = false;
+    let startX = 0;
+    let startY = 0;
+    let scaleX = 1;
+    let scaleY = 1;
+
+    cancelBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (window.snipAPI) window.snipAPI.cancelSnip();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (window.snipAPI) window.snipAPI.cancelSnip();
+      }
+    });
+
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      if (window.snipAPI) window.snipAPI.cancelSnip();
+    });
+
+    if (window.snipAPI) {
+      window.snipAPI.onInitSnip(({ dataUrl, bounds, scaleFactor }) => {
+        screenBg.style.backgroundImage = `url("${dataUrl}")`;
+        fullImg.onload = () => {
+          scaleX = (fullImg.naturalWidth || window.innerWidth) / window.innerWidth;
+          scaleY = (fullImg.naturalHeight || window.innerHeight) / window.innerHeight;
+        };
+        fullImg.src = dataUrl;
+        if (fullImg.complete && fullImg.naturalWidth) {
+          scaleX = fullImg.naturalWidth / window.innerWidth;
+          scaleY = fullImg.naturalHeight / window.innerHeight;
+        }
+      });
+    }
+
+    window.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isDrawing = true;
+      startX = e.clientX;
+      startY = e.clientY;
+
+      dimmer.style.display = 'none';
+      selectionBox.style.left = startX + 'px';
+      selectionBox.style.top = startY + 'px';
+      selectionBox.style.width = '0px';
+      selectionBox.style.height = '0px';
+      selectionBox.style.display = 'block';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+
+      const left = Math.min(startX, currentX);
+      const top = Math.min(startY, currentY);
+      const width = Math.abs(currentX - startX);
+      const height = Math.abs(currentY - startY);
+
+      selectionBox.style.left = left + 'px';
+      selectionBox.style.top = top + 'px';
+      selectionBox.style.width = width + 'px';
+      selectionBox.style.height = height + 'px';
+
+      const realW = Math.round(width * scaleX);
+      const realH = Math.round(height * scaleY);
+      dimBadge.textContent = `${realW} × ${realH}`;
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (!isDrawing) return;
+      isDrawing = false;
+
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+
+      const left = Math.min(startX, currentX);
+      const top = Math.min(startY, currentY);
+      const width = Math.abs(currentX - startX);
+      const height = Math.abs(currentY - startY);
+
+      if (width < 8 || height < 8) {
+        selectionBox.style.display = 'none';
+        return;
+      }
+
+      // Crop from natural image
+      const sx = Math.round(left * scaleX);
+      const sy = Math.round(top * scaleY);
+      const sw = Math.round(width * scaleX);
+      const sh = Math.round(height * scaleY);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, sw);
+      canvas.height = Math.max(1, sh);
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(fullImg, sx, sy, sw, sh, 0, 0, sw, sh);
+        const croppedDataUrl = canvas.toDataURL('image/png');
+        if (window.snipAPI) {
+          window.snipAPI.finishSnip({
+            dataUrl: croppedDataUrl,
+            width: sw,
+            height: sh,
+          });
+        }
+      } else {
+        if (window.snipAPI) window.snipAPI.cancelSnip();
+      }
+    });
+  </script>
+
+</body>
+</html>

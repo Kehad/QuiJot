@@ -1,0 +1,344 @@
+.windowSnipSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+:global(body.theme-glass-dark) .windowSnipSection {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.windowSnipHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  color: var(--app-text);
+}
+
+.btnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.btnIcon:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-0.5px);
+}
+
+:global(body.theme-glass-dark) .btnIcon:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.isSpinning {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.activeWindowQuickCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  cursor: pointer;
+  transition: all 0.14s ease;
+  flex-shrink: 0;
+}
+
+:global(body.theme-glass-dark) .activeWindowQuickCard {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.activeWindowQuickCard:hover {
+  background: rgba(14, 165, 233, 0.14);
+  border-color: var(--app-accent);
+  transform: translateY(-0.5px);
+}
+
+.activeWindowQuickLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.activeDotLive {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  flex-shrink: 0;
+  animation: pulseDot 1.4s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.activeWindowQuickBadge {
+  font-size: 8.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #0284c7;
+}
+
+:global(body.theme-glass-dark) .activeWindowQuickBadge {
+  color: #38bdf8;
+}
+
+.activeWindowQuickName {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--app-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btnPrimary {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: var(--app-accent);
+  color: #18181b;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btnPrimary:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-0.5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.windowSearchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 8px;
+  color: var(--app-text-muted);
+  pointer-events: none;
+}
+
+.windowSearchInput {
+  width: 100%;
+  padding: 5px 24px 5px 26px;
+  font-size: 11px;
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--app-text);
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+:global(body.theme-glass-dark) .windowSearchInput {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.windowSearchInput:focus {
+  border-color: var(--app-accent);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+:global(body.theme-glass-dark) .windowSearchInput:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--app-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.windowSnipGrid {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 2px;
+}
+
+.windowSnipGrid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.windowSnipGrid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+:global(body.theme-glass-dark) .windowSnipGrid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.windowCardsMiniGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.windowSnipCard {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+:global(body.theme-glass-dark) .windowSnipCard {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.windowSnipCard:hover {
+  transform: translateY(-1.5px);
+  border-color: var(--app-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.windowSnipCardThumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.windowThumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.18s ease;
+}
+
+.windowSnipCard:hover .windowThumbImg {
+  transform: scale(1.05);
+}
+
+.windowThumbPlaceholder {
+  color: var(--app-text-muted);
+  opacity: 0.4;
+}
+
+.windowSnipCardHoverPrompt {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+}
+
+.windowSnipCard:hover .windowSnipCardHoverPrompt {
+  opacity: 1;
+}
+
+.windowSnipCardInfo {
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--app-surface);
+  overflow: hidden;
+}
+
+.windowAppIcon {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.windowAppIconPlaceholder {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--app-text-muted);
+  flex-shrink: 0;
+}
+
+.windowCardTitle {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--app-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.windowLoadingState,
+.windowEmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px 12px;
+  text-align: center;
+  color: var(--app-text);
+}

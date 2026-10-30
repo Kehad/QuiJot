@@ -1,0 +1,295 @@
+.appHeader {
+  height: 34px;
+  min-height: 34px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--app-header);
+  border-bottom: 1px solid var(--app-border);
+  -webkit-app-region: drag;
+  cursor: grab;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.appHeader:active {
+  cursor: grabbing;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--app-text);
+}
+
+.appBrandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--app-accent);
+  color: #fff;
+  font-size: 11px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.appTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pinnedBadge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--app-accent);
+  color: #fff;
+  box-shadow: 0 0 8px var(--app-accent-glow);
+  animation: pulsePin 2.4s ease-in-out infinite;
+}
+
+@keyframes pulsePin {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+}
+
+.btnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.16s ease;
+  position: relative;
+}
+
+.btnIcon:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-0.5px);
+}
+
+:global(body.theme-glass-dark) .btnIcon:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btnIcon:active {
+  transform: translateY(0.5px) scale(0.96);
+}
+
+.btnPin {
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btnPin.isActive {
+  background: var(--app-accent);
+  color: #ffffff;
+  box-shadow: 0 0 10px var(--app-accent-glow);
+}
+
+.btnPin.isActive:hover {
+  background: var(--app-accent);
+  filter: brightness(1.08);
+}
+
+.btnIcon.isActive {
+  background: var(--app-accent);
+  color: #18181b;
+}
+
+:global(body.theme-glass-dark) .btnIcon.isActive {
+  color: #18181b;
+}
+
+.btnClose:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+.opacityPill {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+:global(body.theme-glass-dark) .opacityPill {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.opacityPill:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.popoverMenu {
+  position: absolute;
+  top: 36px;
+  right: 10px;
+  z-index: 100;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeInDown 0.16s ease-out;
+  -webkit-app-region: no-drag;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popoverTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-text-muted);
+}
+
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customRange {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  appearance: none;
+  background: rgba(0, 0, 0, 0.12);
+  outline: none;
+  cursor: pointer;
+}
+
+:global(body.theme-glass-dark) .customRange {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.customRange::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--app-accent);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.customRange::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.presetButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.presetBtn {
+  flex: 1;
+  padding: 3px 0;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--app-border);
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.presetBtn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+:global(body.theme-glass-dark) .presetBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.presetBtn.isActive {
+  background: var(--app-accent);
+  color: #fff;
+  border-color: var(--app-accent);
+}
+
+.headerNotesBtn {
+  position: relative;
+}
+
+.headerNotesBadge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 12px;
+  height: 12px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: var(--app-accent);
+  color: #1c1917;
+  font-size: 8px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.headerNewBtn {
+  position: relative;
+}
