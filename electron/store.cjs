@@ -1,14 +1,21 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 const { app, screen } = require('electron');
 
 class DataStore {
   constructor() {
     const baseDir = process.env.APPDATA || app.getPath('userData');
-    this.userDataPath = path.join(baseDir, 'AlwaysOnTop');
+    this.userDataPath = path.join(baseDir, 'Qukjot');
+    const legacyPaths = [path.join(baseDir, 'AlwaysOnTop')];
     if (!fs.existsSync(this.userDataPath)) {
       try {
-        fs.mkdirSync(this.userDataPath, { recursive: true });
+        const found = legacyPaths.find((p) => fs.existsSync(p));
+        if (found) {
+          // Migrate existing notes and config from legacy directory
+          fs.cpSync(found, this.userDataPath, { recursive: true });
+        } else {
+          fs.mkdirSync(this.userDataPath, { recursive: true });
+        }
       } catch (err) {
         console.error('Failed to create user data dir:', err);
       }
@@ -20,9 +27,9 @@ class DataStore {
     let defaultScreenshots = '';
     try {
       const picDir = app.getPath('pictures') || app.getPath('documents') || app.getPath('home');
-      defaultScreenshots = path.join(picDir, 'FastNote Screenshots');
+      defaultScreenshots = path.join(picDir, 'Qukjot Screenshots');
     } catch {
-      defaultScreenshots = path.join(process.env.USERPROFILE || process.env.HOME || '.', 'Pictures', 'FastNote Screenshots');
+      defaultScreenshots = path.join(process.env.USERPROFILE || process.env.HOME || '.', 'Pictures', 'Qukjot Screenshots');
     }
 
     this.defaultConfig = {
@@ -70,7 +77,7 @@ class DataStore {
       console.error(`Error in atomicWrite for ${filePath}:`, err);
       try {
         if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
-      } catch {}
+      } catch { }
       return false;
     }
   }
@@ -171,7 +178,7 @@ class DataStore {
             if (!fs.existsSync(config.screenshotFolder)) {
               fs.mkdirSync(config.screenshotFolder, { recursive: true });
             }
-          } catch {}
+          } catch { }
         }
         return config;
       }
@@ -183,7 +190,7 @@ class DataStore {
         if (!fs.existsSync(this.defaultConfig.screenshotFolder)) {
           fs.mkdirSync(this.defaultConfig.screenshotFolder, { recursive: true });
         }
-      } catch {}
+      } catch { }
     }
     return this.defaultConfig;
   }

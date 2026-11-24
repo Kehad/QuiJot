@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Check,
@@ -102,7 +102,7 @@ export const ScreenshotPreview: React.FC<ScreenshotPreviewProps> = ({
         if (window.electronAPI) {
           const saved = await window.electronAPI.saveScreenshot(
             croppedUrl,
-            `FastNote_Cropped_${Date.now()}.png`
+            `Qukjot_Cropped_${Date.now()}.png`
           );
           await window.electronAPI.copyScreenshotToClipboard(croppedUrl);
 

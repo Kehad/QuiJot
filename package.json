@@ -1,5 +1,5 @@
 {
-  "name": "fastnote",
+  "name": "qukjot",
   "version": "1.0.0",
   "description": "Distraction-free desktop sticky note utility pinned above all windows",
   "main": "electron/main.cjs",

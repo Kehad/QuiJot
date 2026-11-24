@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { FolderOpen } from 'lucide-react';
 import styles from './ScreenshotFolderFooter.module.css';
 
@@ -18,7 +18,7 @@ export const ScreenshotFolderFooter: React.FC<ScreenshotFolderFooterProps> = ({
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden' }}>
         <FolderOpen size={12} color="var(--app-accent)" style={{ flexShrink: 0 }} />
         <span className={styles.folderPathLabel} title={folderPath}>
-          {folderPath || 'Pictures/FastNote Screenshots'}
+          {folderPath || 'Pictures/Qukjot Screenshots'}
         </span>
       </div>
       <div style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>

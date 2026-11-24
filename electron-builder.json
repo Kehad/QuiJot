@@ -1,8 +1,8 @@
 {
-  "appId": "com.fastnote.app",
-  "productName": "FastNote",
+  "appId": "com.qukjot.app",
+  "productName": "Qukjot",
   "directories": {
-    "output": "release"
+    "output": "dist-release"
   },
   "files": [
     "dist/**/*",
@@ -15,11 +15,15 @@
     "target": [
       {
         "target": "nsis",
-        "arch": ["x64"]
+        "arch": [
+          "x64"
+        ]
       },
       {
         "target": "portable",
-        "arch": ["x64"]
+        "arch": [
+          "x64"
+        ]
       }
     ]
   },
@@ -28,6 +32,6 @@
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "FastNote"
+    "shortcutName": "Qukjot"
   }
 }

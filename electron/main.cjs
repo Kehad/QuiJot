@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, dialog, screen, desktopCapturer, clipboard, shell, globalShortcut } = require('electron');
+﻿const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, dialog, screen, desktopCapturer, clipboard, shell, globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { execFile } = require('child_process');
@@ -14,7 +14,7 @@ if (!gotTheLock) {
 
 // Ensure Windows taskbar correctly groups and displays full-size icon
 if (process.platform === 'win32') {
-  app.setAppUserModelId('com.fastnote.app');
+  app.setAppUserModelId('com.qukjot.app');
 }
 
 let mainWindow = null;
@@ -94,7 +94,7 @@ function createWindow() {
 
   try {
     mainWindow.setIcon(iconPath);
-  } catch {}
+  } catch { }
 
   // Always on top level: 'screen-saver' keeps it above full-screen windows & editors
   if (config.isAlwaysOnTop) {
@@ -213,7 +213,7 @@ function updateTrayContextMenu() {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: isWinVisible ? 'Hide FastNote (Alt+Shift+N)' : 'Open FastNote (Alt+Shift+N)',
+      label: isWinVisible ? 'Hide Qukjot (Alt+Shift+N)' : 'Open Qukjot (Alt+Shift+N)',
       click: () => {
         toggleAppVisibility();
       },
@@ -362,7 +362,7 @@ function updateTrayContextMenu() {
     },
     { type: 'separator' },
     {
-      label: 'Quit FastNote',
+      label: 'Quit Qukjot',
       click: () => {
         isQuitting = true;
         app.quit();
@@ -376,7 +376,7 @@ function updateTrayContextMenu() {
 function setupTray() {
   const icon = createTrayIcon();
   tray = new Tray(icon);
-  tray.setToolTip('FastNote — Sticky Note & FastSnap');
+  tray.setToolTip('Qukjot — Sticky Note & FastSnap');
 
   tray.on('click', () => {
     toggleAppVisibility();
@@ -406,7 +406,8 @@ ipcMain.handle('save-note', async (_event, content, noteId) => {
   const targetId = noteId || current.activeNoteId;
   const activeIdx = current.notes.findIndex((n) => n.id === targetId);
   const now = new Date().toISOString();
-  const firstLine = content.split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
+  const plainText = content ? content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+  const firstLine = plainText.slice(0, 30) || 'Untitled Note';
 
   if (activeIdx >= 0) {
     current.notes[activeIdx].content = content;
@@ -493,7 +494,7 @@ ipcMain.handle('export-file', async (_event, { content, defaultName }) => {
   if (!mainWindow) return false;
   const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
     title: 'Export Sticky Note',
-    defaultPath: defaultName || 'FastNote.txt',
+    defaultPath: defaultName || 'Qukjot.txt',
     filters: [
       { name: 'Text Documents', extensions: ['txt'] },
       { name: 'Markdown Documents', extensions: ['md'] },
@@ -523,7 +524,7 @@ function saveScreenshotFile(dataUrl, customLabel = 'Snip') {
   let targetFolder = config.screenshotFolder;
   if (!targetFolder) {
     const picDir = app.getPath('pictures') || app.getPath('documents') || app.getPath('home');
-    targetFolder = path.join(picDir, 'FastNote Screenshots');
+    targetFolder = path.join(picDir, 'Qukjot Screenshots');
   }
 
   try {
@@ -545,7 +546,7 @@ function saveScreenshotFile(dataUrl, customLabel = 'Snip') {
   const timeStr = `${hours}${mins}${secs}`;
 
   const cleanLabel = (customLabel || 'Snip').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 30);
-  const filename = `FastNote_${cleanLabel}_${dateStr}_${timeStr}.png`;
+  const filename = `Qukjot_${cleanLabel}_${dateStr}_${timeStr}.png`;
   const filePath = path.join(targetFolder, filename);
 
   const base64Data = dataUrl.replace(/^data:image\/\w+;base64,/, '');
@@ -566,7 +567,7 @@ function saveScreenshotFile(dataUrl, customLabel = 'Snip') {
   };
 }
 
-// Helper: Capture the screen cleanly with FastNote hidden
+// Helper: Capture the screen cleanly with Qukjot hidden
 async function captureDesktopScreen() {
   const wasVisible = mainWindow && !mainWindow.isDestroyed() && mainWindow.isVisible();
   if (wasVisible) {
@@ -599,7 +600,7 @@ async function captureDesktopScreen() {
   // Attempt 2: PowerShell screencap fallback
   if (!targetImg || targetImg.isEmpty()) {
     try {
-      const tempPath = path.join(app.getPath('temp'), `fastnote_temp_${Date.now()}.png`);
+      const tempPath = path.join(app.getPath('temp'), `qukjot_temp_${Date.now()}.png`);
       const psScript = path.join(__dirname, 'screencap.ps1');
       await new Promise((resolve) => {
         execFile(
@@ -610,7 +611,7 @@ async function captureDesktopScreen() {
               try {
                 targetImg = nativeImage.createFromPath(tempPath);
                 fs.unlinkSync(tempPath);
-              } catch {}
+              } catch { }
             }
             resolve();
           }
@@ -794,14 +795,14 @@ ipcMain.handle('get-capturable-sources', async () => {
     const ignoredNames = ['taskbar', 'program manager', 'windows input experience', 'default ime', 'msctfime ui'];
 
     const filtered = sources.filter((s) => {
-      // Exclude FastNote's own sticky note window
+      // Exclude Qukjot's own sticky note window
       if (myMediaId && s.id === myMediaId) return false;
       const nameTrimmed = (s.name || '').trim();
       if (!nameTrimmed) return false;
 
       const nameLower = nameTrimmed.toLowerCase();
-      // Only exclude FastNote's exact app title, DO NOT exclude other apps (VS Code, Chrome, etc.)
-      if (nameLower === 'alwaysontop' || nameLower === 'fastnote' || nameLower === 'fastnote snipping tool' || nameLower === 'fastsnap') {
+      // Only exclude Qukjot's exact app title, DO NOT exclude other apps (VS Code, Chrome, etc.)
+      if (nameLower === 'alwaysontop' || nameLower === 'qukjot' || nameLower === 'qukjot snipping tool' || nameLower === 'fastsnap') {
         return false;
       }
       if (ignoredNames.includes(nameLower)) return false;
@@ -872,7 +873,7 @@ ipcMain.handle('capture-window', async (_event, sourceId) => {
 ipcMain.handle('select-screenshot-folder', async () => {
   if (!mainWindow) return null;
   const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
-    title: 'Select Folder for FastNote Screenshots',
+    title: 'Select Folder for Qukjot Screenshots',
     properties: ['openDirectory', 'createDirectory'],
   });
 
@@ -997,7 +998,7 @@ app.whenReady().then(() => {
 app.on('will-quit', () => {
   try {
     globalShortcut.unregisterAll();
-  } catch {}
+  } catch { }
 });
 
 app.on('before-quit', () => {
@@ -1005,7 +1006,7 @@ app.on('before-quit', () => {
 });
 
 app.on('window-all-closed', () => {
-  // FastNote runs as a resident background tray application.
+  // Qukjot runs as a resident background tray application.
   // Do NOT quit when the window is closed, so global shortcuts remain responsive.
   if (isQuitting) {
     app.quit();

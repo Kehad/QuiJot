@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 import { Pin, Minus, X, SlidersHorizontal, Settings, Code, Type, Camera, FileText, Plus } from 'lucide-react';
 import { AppConfig } from '../types/electron';
 import appLogo from '../../assests/web/icon-512x512.png';
@@ -57,10 +57,10 @@ export const Header: React.FC<HeaderProps> = ({
     <header className={styles.appHeader}>
       <div className={styles.headerLeft}>
         <span className={styles.appBrandIcon} style={{ overflow: 'hidden' }}>
-          <img src={appLogo} alt="FastNote" width="18" height="18" style={{ display: 'block', objectFit: 'cover' }} />
+          <img src={appLogo} alt="Qukjot" width="18" height="18" style={{ display: 'block', objectFit: 'cover' }} />
         </span>
         <div className={styles.appTitle}>
-          <span>FastNote</span>
+          <span>Qukjot</span>
           {config.isAlwaysOnTop && <span className={styles.pinnedBadge}>Pinned</span>}
         </div>
       </div>

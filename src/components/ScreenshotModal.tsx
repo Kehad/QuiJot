@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { X, Camera, Sparkles, AppWindow, SquareDashedMousePointer, Monitor } from 'lucide-react';
 import { CapturableSource, CaptureResult, AppConfig } from '../types/electron';
 import { ScreenshotPreview } from './screenshot/ScreenshotPreview';
@@ -72,7 +72,7 @@ export const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
           showToast('📐 Rectangular Snip saved to folder & copied!');
         }
       } else {
-        showToast('⚠️ Please restart FastNote to load the new FastSnap backend.');
+        showToast('⚠️ Please restart Qukjot to load the new FastSnap backend.');
       }
     } catch (err: unknown) {
       console.error('Rectangular snip error:', err);
@@ -96,7 +96,7 @@ export const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
           showToast('🖥️ Full Screen captured, saved to folder & copied!');
         }
       } else {
-        showToast('⚠️ Please restart FastNote to load the new FastSnap backend.');
+        showToast('⚠️ Please restart Qukjot to load the new FastSnap backend.');
       }
     } catch (err: unknown) {
       console.error('Full screen snip error:', err);
@@ -120,7 +120,7 @@ export const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
           showToast(`🪟 ${result.name} captured, saved to folder & copied!`);
         }
       } else {
-        showToast('⚠️ Please restart FastNote to load the new FastSnap backend.');
+        showToast('⚠️ Please restart Qukjot to load the new FastSnap backend.');
       }
     } catch (err: unknown) {
       console.error('Window snip error:', err);

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { X, Plus, Search, Trash2, FileText, Clock } from 'lucide-react';
 import { NoteItem } from '../types/electron';
+import { htmlToPlainText } from '../utils/textUtils';
 import styles from './NotesListModal.module.css';
 
 interface NotesListModalProps {
@@ -27,9 +28,10 @@ export const NotesListModal: React.FC<NotesListModalProps> = ({
   const filteredNotes = useMemo(() => {
     if (!searchQuery.trim()) return notes;
     const q = searchQuery.toLowerCase();
-    return notes.filter(
-      (n) => n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q)
-    );
+    return notes.filter((n) => {
+      const plain = htmlToPlainText(n.content).toLowerCase();
+      return n.title.toLowerCase().includes(q) || plain.includes(q);
+    });
   }, [notes, searchQuery]);
 
   if (!isOpen) return null;
@@ -138,7 +140,8 @@ export const NotesListModal: React.FC<NotesListModalProps> = ({
           ) : (
             filteredNotes.map((item) => {
               const isActive = item.id === activeNoteId;
-              const previewText = item.content.trim() || 'Empty note...';
+              const plainSnippet = htmlToPlainText(item.content).trim();
+              const previewText = plainSnippet || 'Empty note...';
               const timeDisplay = formatTimestamp(item.updatedAt);
 
               return (

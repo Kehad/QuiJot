@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Header } from './components/Header';
 import { NoteEditor } from './components/NoteEditor';
 import { Footer } from './components/Footer';
@@ -6,6 +6,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { ScreenshotModal } from './components/ScreenshotModal';
 import { NotesListModal } from './components/NotesListModal';
 import { AppConfig, ThemeName, NoteItem, NotesPayload } from './types/electron';
+import { htmlToPlainText, htmlToMarkdown } from './utils/textUtils';
 import styles from './App.module.css';
 
 const DEFAULT_CONFIG: AppConfig = {
@@ -68,7 +69,7 @@ export const App: React.FC = () => {
             latestContentRef.current = loadedText;
           } else if (data?.note?.content !== undefined) {
             const defaultId = data.note.id || ('note_' + Date.now());
-            const firstLine = data.note.title || data.note.content.split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
+            const firstLine = data.note.title || htmlToPlainText(data.note.content).split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
             const initialItem: NoteItem = {
               id: defaultId,
               title: firstLine,
@@ -107,9 +108,9 @@ export const App: React.FC = () => {
         }
       } else {
         // Fallback for browser preview / testing
-        const savedPayload = localStorage.getItem('fastnote_notes_payload');
-        const savedNote = localStorage.getItem('fastnote_content');
-        const savedConfig = localStorage.getItem('fastnote_config');
+        const savedPayload = localStorage.getItem('qukjot_notes_payload');
+        const savedNote = localStorage.getItem('qukjot_content');
+        const savedConfig = localStorage.getItem('qukjot_config');
 
         if (savedPayload) {
           try {
@@ -124,12 +125,12 @@ export const App: React.FC = () => {
               setContent(curNote ? curNote.content : '');
               latestContentRef.current = curNote ? curNote.content : '';
             }
-          } catch {}
+          } catch { }
         } else {
           const defaultId = 'note_' + Date.now();
           const initialItem: NoteItem = {
             id: defaultId,
-            title: savedNote ? savedNote.split('\n')[0].trim().slice(0, 30) || 'Untitled Note' : 'Untitled Note',
+            title: savedNote ? htmlToPlainText(savedNote).split('\n')[0].trim().slice(0, 30) || 'Untitled Note' : 'Untitled Note',
             content: savedNote || '',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
@@ -145,7 +146,7 @@ export const App: React.FC = () => {
         if (savedConfig) {
           try {
             setConfig(JSON.parse(savedConfig));
-          } catch {}
+          } catch { }
         }
       }
       setIsLoaded(true);
@@ -190,7 +191,7 @@ export const App: React.FC = () => {
     }
     setIsSaving(true);
     const activeId = activeNoteIdRef.current;
-    const firstLine = newContent.split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
+    const firstLine = htmlToPlainText(newContent).split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
 
     // Update in-memory list preview instantly
     setNotes((prevNotes) => {
@@ -207,9 +208,9 @@ export const App: React.FC = () => {
       if (window.electronAPI) {
         await window.electronAPI.saveNote(newContent, activeId);
       } else {
-        localStorage.setItem('fastnote_content', newContent);
+        localStorage.setItem('qukjot_content', newContent);
         const payload: NotesPayload = { activeNoteId: activeId, notes: notesRef.current };
-        localStorage.setItem('fastnote_notes_payload', JSON.stringify(payload));
+        localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
       }
       setIsSaving(false);
     }, 1000);
@@ -247,10 +248,9 @@ export const App: React.FC = () => {
     const curIdx = currentNotes.findIndex((n) => n.id === curId);
     if (curIdx >= 0) {
       currentNotes[curIdx].content = curContent;
-      currentNotes[curIdx].title = curContent.split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
+      currentNotes[curIdx].title = htmlToPlainText(curContent).split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
       currentNotes[curIdx].updatedAt = new Date().toISOString();
     }
-
     const targetNote = currentNotes.find((n) => n.id === id);
     const newContent = targetNote ? targetNote.content : '';
 
@@ -265,7 +265,7 @@ export const App: React.FC = () => {
     if (window.electronAPI) {
       window.electronAPI.saveNotesList(payload);
     } else {
-      localStorage.setItem('fastnote_notes_payload', JSON.stringify(payload));
+      localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
     }
   };
 
@@ -278,7 +278,7 @@ export const App: React.FC = () => {
     const curIdx = currentNotes.findIndex((n) => n.id === curId);
     if (curIdx >= 0) {
       currentNotes[curIdx].content = curContent;
-      currentNotes[curIdx].title = curContent.split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
+      currentNotes[curIdx].title = htmlToPlainText(curContent).split('\n')[0].trim().slice(0, 30) || 'Untitled Note';
       currentNotes[curIdx].updatedAt = new Date().toISOString();
     }
 
@@ -303,7 +303,7 @@ export const App: React.FC = () => {
     if (window.electronAPI) {
       window.electronAPI.saveNotesList(payload);
     } else {
-      localStorage.setItem('fastnote_notes_payload', JSON.stringify(payload));
+      localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
     }
   };
 
@@ -341,11 +341,11 @@ export const App: React.FC = () => {
     if (window.electronAPI) {
       window.electronAPI.saveNotesList(payload);
     } else {
-      localStorage.setItem('fastnote_notes_payload', JSON.stringify(payload));
+      localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
     }
   };
 
-  // Global keyboard shortcuts inside FastNote:
+  // Global keyboard shortcuts inside Qukjot:
   // - Ctrl+N: New Note
   // - Ctrl+L: Toggle Notes List
   // - Ctrl+Shift+S / Alt+S: FastSnap
@@ -391,7 +391,7 @@ export const App: React.FC = () => {
         await window.electronAPI.setStartup(partial.startOnBoot);
       }
     } else {
-      localStorage.setItem('fastnote_config', JSON.stringify(updated));
+      localStorage.setItem('qukjot_config', JSON.stringify(updated));
     }
   };
 
@@ -433,11 +433,12 @@ export const App: React.FC = () => {
 
   // Export
   const handleExportNote = async (format: 'txt' | 'md') => {
-    const filename = `FastNote-${new Date().toISOString().slice(0, 10)}.${format}`;
+    const filename = `Qukjot-${new Date().toISOString().slice(0, 10)}.${format}`;
+    const exportContent = format === 'txt' ? htmlToPlainText(content) : htmlToMarkdown(content);
     if (window.electronAPI) {
-      await window.electronAPI.exportFile(content, filename);
+      await window.electronAPI.exportFile(exportContent, filename);
     } else {
-      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -454,7 +455,8 @@ export const App: React.FC = () => {
 
   // Insert text from screenshot action
   const handleInsertNoteText = (inserted: string) => {
-    handleContentChange(content ? `${content}\n${inserted}` : inserted);
+    const newBlock = `<div>${inserted}</div>`;
+    handleContentChange(content ? `${content}${newBlock}` : newBlock);
   };
 
   return (
@@ -479,6 +481,7 @@ export const App: React.FC = () => {
         />
 
         <NoteEditor
+          key={activeNoteId}
           content={content}
           onChange={handleContentChange}
           isMonospace={isMonospace}

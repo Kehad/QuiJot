@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { ThemeName } from '../types/electron';
+import { htmlToPlainText } from '../utils/textUtils';
 import styles from './Footer.module.css';
 
 interface FooterProps {
@@ -18,12 +19,28 @@ export const Footer: React.FC<FooterProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  // Compute words and characters
-  const charCount = content.length;
-  const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
+  // Compute words and characters from plain text
+  const plainText = htmlToPlainText(content);
+  const charCount = plainText.length;
+  const wordCount = plainText.trim() ? plainText.trim().split(/\s+/).length : 0;
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(content);
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard?.write && window.ClipboardItem) {
+        const textBlob = new Blob([plainText], { type: 'text/plain' });
+        const htmlBlob = new Blob([content], { type: 'text/html' });
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/plain': textBlob,
+            'text/html': htmlBlob,
+          }),
+        ]);
+      } else {
+        await navigator.clipboard.writeText(plainText);
+      }
+    } catch {
+      await navigator.clipboard.writeText(plainText);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
