@@ -46,6 +46,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   const themes: { id: ThemeName; name: string; swatchClass: string }[] = [
+    { id: 'white', name: 'Paper White', swatchClass: styles.swatchWhite },
     { id: 'yellow', name: 'Canary Yellow', swatchClass: styles.swatchYellow },
     { id: 'mint', name: 'Mint Green', swatchClass: styles.swatchMint },
     { id: 'pink', name: 'Soft Pink', swatchClass: styles.swatchPink },

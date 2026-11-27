@@ -1,18 +1,28 @@
 {
-  "appId": "com.qukjot.app",
-  "productName": "Qukjot",
+  "appId": "com.qikjot.app",
+  "productName": "Qikjot",
   "directories": {
     "output": "dist-release"
   },
   "files": [
     "dist/**/*",
     "electron/**/*",
-    "assests/**/*",
+    "assests/icon.ico",
+    "assests/web/icon-512x512.png",
     "package.json"
   ],
+  "electronLanguages": [
+    "en-US"
+  ],
   "win": {
-    "icon": "assests/web/icon-512x512.png",
+    "icon": "assests/icon.ico",
     "target": [
+      {
+        "target": "appx",
+        "arch": [
+          "x64"
+        ]
+      },
       {
         "target": "nsis",
         "arch": [
@@ -27,11 +37,17 @@
       }
     ]
   },
+  "appx": {
+    "identityName": "KehindeAdigun.QikJot",
+    "publisher": "CN=89C81686-17C4-4EF5-82B0-224CB2C71641",
+    "publisherDisplayName": "Kehinde Adigun",
+    "backgroundColor": "#1e1e1e"
+  },
   "nsis": {
     "oneClick": false,
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "Qukjot"
+    "shortcutName": "Qikjot"
   }
 }

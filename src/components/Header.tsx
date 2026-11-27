@@ -57,10 +57,10 @@ export const Header: React.FC<HeaderProps> = ({
     <header className={styles.appHeader}>
       <div className={styles.headerLeft}>
         <span className={styles.appBrandIcon} style={{ overflow: 'hidden' }}>
-          <img src={appLogo} alt="Qukjot" width="18" height="18" style={{ display: 'block', objectFit: 'cover' }} />
+          <img src={appLogo} alt="Qikjot" width="18" height="18" style={{ display: 'block', objectFit: 'cover' }} />
         </span>
         <div className={styles.appTitle}>
-          <span>Qukjot</span>
+          <span>Qikjot</span>
           {config.isAlwaysOnTop && <span className={styles.pinnedBadge}>Pinned</span>}
         </div>
       </div>

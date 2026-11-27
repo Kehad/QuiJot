@@ -45,7 +45,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <div className={styles.modalRow}>
             <div className={styles.modalLabel}>
               <span style={{ fontWeight: 500 }}>Launch on Windows Startup</span>
-              <span className={styles.modalSubtext}>Start Qukjot automatically when logging into Windows</span>
+              <span className={styles.modalSubtext}>Start Qikjot automatically when logging into Windows</span>
             </div>
             <label className={styles.switch}>
               <input
@@ -104,10 +104,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </span>
             <div
               className={styles.screenshotPathDisplay}
-              title={config.screenshotFolder || 'Pictures/Qukjot Screenshots'}
+              title={config.screenshotFolder || 'Pictures/Qikjot Screenshots'}
             >
               <span className={styles.pathText}>
-                {config.screenshotFolder || 'Qukjot Screenshots'}
+                {config.screenshotFolder || 'Qikjot Screenshots'}
               </span>
             </div>
             <div className={styles.modalActions} style={{ marginTop: '2px' }}>
@@ -152,7 +152,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
             <div className={styles.settingsShortcutsCard}>
               <div className={styles.shortcutItemRow}>
-                <span className={styles.shortcutLabel}>Open / Toggle Qukjot (Global)</span>
+                <span className={styles.shortcutLabel}>Open / Toggle Qikjot (Global)</span>
                 <div className={styles.shortcutKeysBadge}>
                   <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>
                 </div>

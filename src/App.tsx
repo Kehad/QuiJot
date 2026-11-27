@@ -108,9 +108,9 @@ export const App: React.FC = () => {
         }
       } else {
         // Fallback for browser preview / testing
-        const savedPayload = localStorage.getItem('qukjot_notes_payload');
-        const savedNote = localStorage.getItem('qukjot_content');
-        const savedConfig = localStorage.getItem('qukjot_config');
+        const savedPayload = localStorage.getItem('qikjot_notes_payload');
+        const savedNote = localStorage.getItem('qikjot_content');
+        const savedConfig = localStorage.getItem('qikjot_config');
 
         if (savedPayload) {
           try {
@@ -208,9 +208,9 @@ export const App: React.FC = () => {
       if (window.electronAPI) {
         await window.electronAPI.saveNote(newContent, activeId);
       } else {
-        localStorage.setItem('qukjot_content', newContent);
+        localStorage.setItem('qikjot_content', newContent);
         const payload: NotesPayload = { activeNoteId: activeId, notes: notesRef.current };
-        localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
+        localStorage.setItem('qikjot_notes_payload', JSON.stringify(payload));
       }
       setIsSaving(false);
     }, 1000);
@@ -265,7 +265,7 @@ export const App: React.FC = () => {
     if (window.electronAPI) {
       window.electronAPI.saveNotesList(payload);
     } else {
-      localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
+      localStorage.setItem('qikjot_notes_payload', JSON.stringify(payload));
     }
   };
 
@@ -303,7 +303,7 @@ export const App: React.FC = () => {
     if (window.electronAPI) {
       window.electronAPI.saveNotesList(payload);
     } else {
-      localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
+      localStorage.setItem('qikjot_notes_payload', JSON.stringify(payload));
     }
   };
 
@@ -341,11 +341,11 @@ export const App: React.FC = () => {
     if (window.electronAPI) {
       window.electronAPI.saveNotesList(payload);
     } else {
-      localStorage.setItem('qukjot_notes_payload', JSON.stringify(payload));
+      localStorage.setItem('qikjot_notes_payload', JSON.stringify(payload));
     }
   };
 
-  // Global keyboard shortcuts inside Qukjot:
+  // Global keyboard shortcuts inside Qikjot:
   // - Ctrl+N: New Note
   // - Ctrl+L: Toggle Notes List
   // - Ctrl+Shift+S / Alt+S: FastSnap
@@ -391,7 +391,7 @@ export const App: React.FC = () => {
         await window.electronAPI.setStartup(partial.startOnBoot);
       }
     } else {
-      localStorage.setItem('qukjot_config', JSON.stringify(updated));
+      localStorage.setItem('qikjot_config', JSON.stringify(updated));
     }
   };
 
@@ -433,7 +433,7 @@ export const App: React.FC = () => {
 
   // Export
   const handleExportNote = async (format: 'txt' | 'md') => {
-    const filename = `Qukjot-${new Date().toISOString().slice(0, 10)}.${format}`;
+    const filename = `Qikjot-${new Date().toISOString().slice(0, 10)}.${format}`;
     const exportContent = format === 'txt' ? htmlToPlainText(content) : htmlToMarkdown(content);
     if (window.electronAPI) {
       await window.electronAPI.exportFile(exportContent, filename);

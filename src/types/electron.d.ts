@@ -1,4 +1,4 @@
-export type ThemeName = 'yellow' | 'mint' | 'pink' | 'blue' | 'glass-dark';
+export type ThemeName = 'yellow' | 'mint' | 'pink' | 'blue' | 'glass-dark' | 'white';
 
 export interface NoteItem {
   id: string;

@@ -1,6 +1,6 @@
-﻿# Qukjot — Sticky Note Desktop App
+﻿# Qikjot — Sticky Note Desktop App
 
-**Qukjot** is an ultra-lightweight, distraction-free desktop sticky note utility designed to remain permanently pinned above all windows—including full-screen IDEs, browsers, presentation slides, and media players.
+**Qikjot** is an ultra-lightweight, distraction-free desktop sticky note utility designed to remain permanently pinned above all windows—including full-screen IDEs, browsers, presentation slides, and media players.
 
 ---
 
@@ -9,7 +9,7 @@
 ### 📌 Core Must-Haves
 - **True Always-on-Top Engine**: Electron window configured at `'screen-saver'` topmost level (`setAlwaysOnTop(true, 'screen-saver', 1)`), preventing context-switching friction when interacting with full-screen applications or code editors.
 - **Dynamic Pin Toggle**: Quick header pin button (`📌`) with active glowing indicator to pin/unpin anytime.
-- **Atomic Auto-Save**: Debounced auto-save (1000ms idle interval) writes to `%APPDATA%/Qukjot/notes.json` via temporary file write (`.tmp`), OS flush (`fs.fsyncSync`), and atomic rename. Ensures zero data loss or JSON corruption even on power loss or abrupt shutdown.
+- **Atomic Auto-Save**: Debounced auto-save (1000ms idle interval) writes to `%APPDATA%/Qikjot/notes.json` via temporary file write (`.tmp`), OS flush (`fs.fsyncSync`), and atomic rename. Ensures zero data loss or JSON corruption even on power loss or abrupt shutdown.
 - **Frameless Window Mechanics**: Frameless (`frame: false`, `transparent: true`), custom draggable header bar (`-webkit-app-region: drag`), min-dimensions clamped to 240×160px.
 - **Crash & Restart Persistence**: Restores note content, window position, size, opacity, and theme immediately on launch.
 - **System Tray Integration**: Native tray icon, minimizing/closing to tray, click-to-toggle visibility, and full right-click context menu (Show/Hide, New Note, Toggle Topmost, Opacity submenus, Quit).
@@ -31,7 +31,7 @@
 - **Bundler & Dev Server**: Vite + React 19 + TypeScript
 - **Styling**: Vanilla CSS Design System with CSS variables and Glassmorphism (`backdrop-filter: blur(14px) saturate(180%)`)
 - **Icons**: Lucide Icons
-- **Storage**: Local JSON files in `%APPDATA%/Qukjot/` (`notes.json` and `config.json`)
+- **Storage**: Local JSON files in `%APPDATA%/Qikjot/` (`notes.json` and `config.json`)
 
 ---
 

@@ -102,7 +102,7 @@ export const ScreenshotPreview: React.FC<ScreenshotPreviewProps> = ({
         if (window.electronAPI) {
           const saved = await window.electronAPI.saveScreenshot(
             croppedUrl,
-            `Qukjot_Cropped_${Date.now()}.png`
+            `Qikjot_Cropped_${Date.now()}.png`
           );
           await window.electronAPI.copyScreenshotToClipboard(croppedUrl);
 

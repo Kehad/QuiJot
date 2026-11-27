@@ -1,4 +1,4 @@
-﻿const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, dialog, screen, desktopCapturer, clipboard, shell, globalShortcut } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, dialog, screen, desktopCapturer, clipboard, shell, globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { execFile } = require('child_process');
@@ -13,8 +13,10 @@ if (!gotTheLock) {
 }
 
 // Ensure Windows taskbar correctly groups and displays full-size icon
-if (process.platform === 'win32') {
-  app.setAppUserModelId('com.qukjot.app');
+// For Windows Store (MSIX), Windows manages the AppUserModelId automatically.
+// Overriding it in Windows Store breaks the taskbar icon association.
+if (process.platform === 'win32' && !process.windowsStore) {
+  app.setAppUserModelId('com.qikjot.app');
 }
 
 let mainWindow = null;
@@ -70,13 +72,17 @@ function createWindow() {
     height: config.bounds.height || 380,
   };
 
-  const iconPath = path.join(__dirname, '../assests/web/icon-512x512.png');
+  const icoPath = path.join(__dirname, '../assests/icon.ico');
+  const pngPath = path.join(__dirname, '../assests/web/icon-512x512.png');
+  const windowIcon = fs.existsSync(icoPath)
+    ? nativeImage.createFromPath(icoPath)
+    : nativeImage.createFromPath(pngPath);
 
   mainWindow = new BrowserWindow({
     ...initialBounds,
     minWidth: 240,
     minHeight: 160,
-    icon: iconPath,
+    icon: windowIcon,
     frame: false,
     transparent: true,
     backgroundColor: '#00000000',
@@ -93,7 +99,9 @@ function createWindow() {
   });
 
   try {
-    mainWindow.setIcon(iconPath);
+    if (windowIcon && !windowIcon.isEmpty()) {
+      mainWindow.setIcon(windowIcon);
+    }
   } catch { }
 
   // Always on top level: 'screen-saver' keeps it above full-screen windows & editors
@@ -213,7 +221,7 @@ function updateTrayContextMenu() {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: isWinVisible ? 'Hide Qukjot (Alt+Shift+N)' : 'Open Qukjot (Alt+Shift+N)',
+      label: isWinVisible ? 'Hide Qikjot (Alt+Shift+N)' : 'Open Qikjot (Alt+Shift+N)',
       click: () => {
         toggleAppVisibility();
       },
@@ -362,7 +370,7 @@ function updateTrayContextMenu() {
     },
     { type: 'separator' },
     {
-      label: 'Quit Qukjot',
+      label: 'Quit Qikjot',
       click: () => {
         isQuitting = true;
         app.quit();
@@ -376,7 +384,7 @@ function updateTrayContextMenu() {
 function setupTray() {
   const icon = createTrayIcon();
   tray = new Tray(icon);
-  tray.setToolTip('Qukjot — Sticky Note & FastSnap');
+  tray.setToolTip('Qikjot — Sticky Note & FastSnap');
 
   tray.on('click', () => {
     toggleAppVisibility();
@@ -494,7 +502,7 @@ ipcMain.handle('export-file', async (_event, { content, defaultName }) => {
   if (!mainWindow) return false;
   const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
     title: 'Export Sticky Note',
-    defaultPath: defaultName || 'Qukjot.txt',
+    defaultPath: defaultName || 'Qikjot.txt',
     filters: [
       { name: 'Text Documents', extensions: ['txt'] },
       { name: 'Markdown Documents', extensions: ['md'] },
@@ -524,7 +532,7 @@ function saveScreenshotFile(dataUrl, customLabel = 'Snip') {
   let targetFolder = config.screenshotFolder;
   if (!targetFolder) {
     const picDir = app.getPath('pictures') || app.getPath('documents') || app.getPath('home');
-    targetFolder = path.join(picDir, 'Qukjot Screenshots');
+    targetFolder = path.join(picDir, 'Qikjot Screenshots');
   }
 
   try {
@@ -546,7 +554,7 @@ function saveScreenshotFile(dataUrl, customLabel = 'Snip') {
   const timeStr = `${hours}${mins}${secs}`;
 
   const cleanLabel = (customLabel || 'Snip').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 30);
-  const filename = `Qukjot_${cleanLabel}_${dateStr}_${timeStr}.png`;
+  const filename = `Qikjot_${cleanLabel}_${dateStr}_${timeStr}.png`;
   const filePath = path.join(targetFolder, filename);
 
   const base64Data = dataUrl.replace(/^data:image\/\w+;base64,/, '');
@@ -567,7 +575,7 @@ function saveScreenshotFile(dataUrl, customLabel = 'Snip') {
   };
 }
 
-// Helper: Capture the screen cleanly with Qukjot hidden
+// Helper: Capture the screen cleanly with Qikjot hidden
 async function captureDesktopScreen() {
   const wasVisible = mainWindow && !mainWindow.isDestroyed() && mainWindow.isVisible();
   if (wasVisible) {
@@ -600,7 +608,7 @@ async function captureDesktopScreen() {
   // Attempt 2: PowerShell screencap fallback
   if (!targetImg || targetImg.isEmpty()) {
     try {
-      const tempPath = path.join(app.getPath('temp'), `qukjot_temp_${Date.now()}.png`);
+      const tempPath = path.join(app.getPath('temp'), `qikjot_temp_${Date.now()}.png`);
       const psScript = path.join(__dirname, 'screencap.ps1');
       await new Promise((resolve) => {
         execFile(
@@ -795,14 +803,14 @@ ipcMain.handle('get-capturable-sources', async () => {
     const ignoredNames = ['taskbar', 'program manager', 'windows input experience', 'default ime', 'msctfime ui'];
 
     const filtered = sources.filter((s) => {
-      // Exclude Qukjot's own sticky note window
+      // Exclude Qikjot's own sticky note window
       if (myMediaId && s.id === myMediaId) return false;
       const nameTrimmed = (s.name || '').trim();
       if (!nameTrimmed) return false;
 
       const nameLower = nameTrimmed.toLowerCase();
-      // Only exclude Qukjot's exact app title, DO NOT exclude other apps (VS Code, Chrome, etc.)
-      if (nameLower === 'alwaysontop' || nameLower === 'qukjot' || nameLower === 'qukjot snipping tool' || nameLower === 'fastsnap') {
+      // Only exclude Qikjot's exact app title, DO NOT exclude other apps (VS Code, Chrome, etc.)
+      if (nameLower === 'alwaysontop' || nameLower === 'qikjot' || nameLower === 'qikjot snipping tool' || nameLower === 'fastsnap') {
         return false;
       }
       if (ignoredNames.includes(nameLower)) return false;
@@ -873,7 +881,7 @@ ipcMain.handle('capture-window', async (_event, sourceId) => {
 ipcMain.handle('select-screenshot-folder', async () => {
   if (!mainWindow) return null;
   const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
-    title: 'Select Folder for Qukjot Screenshots',
+    title: 'Select Folder for Qikjot Screenshots',
     properties: ['openDirectory', 'createDirectory'],
   });
 
@@ -1006,7 +1014,7 @@ app.on('before-quit', () => {
 });
 
 app.on('window-all-closed', () => {
-  // Qukjot runs as a resident background tray application.
+  // Qikjot runs as a resident background tray application.
   // Do NOT quit when the window is closed, so global shortcuts remain responsive.
   if (isQuitting) {
     app.quit();

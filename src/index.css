@@ -1,5 +1,5 @@
-﻿/* ==========================================================================
-   Qukjot - Global Design Tokens, Themes, & Base Styles
+/* ==========================================================================
+   Qikjot - Global Design Tokens, Themes, & Base Styles
    ========================================================================== */
 
 :root {
@@ -56,6 +56,16 @@
   --text-muted-dark: #94a3b8;
   --accent-dark: #fbbf24;
   --accent-glow-dark: rgba(251, 191, 36, 0.4);
+
+  /* Paper White Theme (Clean Minimalist) */
+  --bg-primary-white: rgba(255, 255, 255, 0.92);
+  --bg-surface-white: rgba(255, 255, 255, 0.98);
+  --bg-header-white: rgba(248, 250, 252, 0.75);
+  --border-white: rgba(203, 213, 225, 0.7);
+  --text-main-white: #0f172a;
+  --text-muted-white: #64748b;
+  --accent-white: #2563eb;
+  --accent-glow-white: rgba(37, 99, 235, 0.35);
 
   /* Current Active Theme Tokens (Initialized to Yellow) */
   --app-bg: var(--bg-primary-yellow);
@@ -125,6 +135,18 @@ body.theme-glass-dark {
   --app-accent: var(--accent-dark);
   --app-accent-glow: var(--accent-glow-dark);
   --app-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+body.theme-white {
+  --app-bg: var(--bg-primary-white);
+  --app-surface: var(--bg-surface-white);
+  --app-header: var(--bg-header-white);
+  --app-border: var(--border-white);
+  --app-text: var(--text-main-white);
+  --app-text-muted: var(--text-muted-white);
+  --app-accent: var(--accent-white);
+  --app-accent-glow: var(--accent-glow-white);
+  --app-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 /* ==========================================================================

@@ -23,7 +23,7 @@ export const SingleSnipTab: React.FC<SingleSnipTabProps> = ({
           <div className={styles.snipHeroText}>
             <span className={styles.snipHeroTitle}>Rectangular Snip</span>
             <span className={styles.snipHeroDesc}>
-              Drag a rectangular shape anywhere on your screen. Qukjot will automatically hide while you snip.
+              Drag a rectangular shape anywhere on your screen. Qikjot will automatically hide while you snip.
             </span>
             <div className={styles.snipHeroTags}>
               <span className={styles.snipTag}>📐 Custom Area</span>
@@ -54,7 +54,7 @@ export const SingleSnipTab: React.FC<SingleSnipTabProps> = ({
         <div className={styles.snipHeroText}>
           <span className={styles.snipHeroTitle}>Full Screen Snip</span>
           <span className={styles.snipHeroDesc}>
-            Capture your entire primary desktop screen instantly. Qukjot will automatically hide while capturing.
+            Capture your entire primary desktop screen instantly. Qikjot will automatically hide while capturing.
           </span>
           <div className={styles.snipHeroTags}>
             <span className={styles.snipTag}>🖥️ Full Desktop</span>

@@ -5,7 +5,7 @@ const { app, screen } = require('electron');
 class DataStore {
   constructor() {
     const baseDir = process.env.APPDATA || app.getPath('userData');
-    this.userDataPath = path.join(baseDir, 'Qukjot');
+    this.userDataPath = path.join(baseDir, 'Qikjot');
     const legacyPaths = [path.join(baseDir, 'AlwaysOnTop')];
     if (!fs.existsSync(this.userDataPath)) {
       try {
@@ -27,9 +27,9 @@ class DataStore {
     let defaultScreenshots = '';
     try {
       const picDir = app.getPath('pictures') || app.getPath('documents') || app.getPath('home');
-      defaultScreenshots = path.join(picDir, 'Qukjot Screenshots');
+      defaultScreenshots = path.join(picDir, 'Qikjot Screenshots');
     } catch {
-      defaultScreenshots = path.join(process.env.USERPROFILE || process.env.HOME || '.', 'Pictures', 'Qukjot Screenshots');
+      defaultScreenshots = path.join(process.env.USERPROFILE || process.env.HOME || '.', 'Pictures', 'Qikjot Screenshots');
     }
 
     this.defaultConfig = {
